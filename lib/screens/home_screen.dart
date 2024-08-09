@@ -1,26 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecomm_home/utils/category_list.dart';
+import 'package:ecomm_home/utils/products.dart';
+import 'package:ecomm_home/utils/promotion_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
-  final List<String> categoryList = [
-    'Electronics',
-    'Fashion',
-    'Home Appliances',
-    'Books',
-    'Beauty & Health',
-    'Sports',
-    'Toys & Games'
-  ];
-  final List<String> promotions = [
-    'CLEARANCE SALE FROM \n 12th August',
-    'INDEPENDENCE DAY SALE ',
-    'FLAT 20% OFF \n Home Appliances',
-    'Books by Rabindranath Tagore',
-    'Beauty & Health by TOP BRANDS',
-    'Sports at its PEAK',
-  ];
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left:8.0),
+                    padding: EdgeInsets.only(left: 8.0),
                     child: Text(
                       "Categories",
                       style: TextStyle(
@@ -132,7 +117,117 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                   ),
-                ) // Expanded()
+                ),
+                const SizedBox(height: 25.0),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "Products",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Expanded(
+                    child: GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  // ignore: prefer_const_constructors
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 0.75,
+                  ),
+                  itemCount: dummyProducts.length,
+                  itemBuilder: (context, index) {
+                    final product = dummyProducts[index];
+                    return Card(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              product.imageUrl,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      '\$${product.price.toStringAsFixed(2)}',
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4.0),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                    product.category,
+                                    style: const TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 6.0),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Item added to cart'),
+                                            duration: Duration(seconds: 1),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text(
+                                        'Add to Cart',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ))
               ],
             ),
           ],
