@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'E Commmerce App Home Page',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context)=> const SplashScreen(),
-        '/home': (context)=> const HomeScreen(),
+        '/home': (context)=> HomeScreen(),
       },
     );
   }

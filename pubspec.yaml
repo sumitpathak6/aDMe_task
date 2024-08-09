@@ -12,6 +12,7 @@ dependencies:
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
   flutter_native_splash: ^2.4.1
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
