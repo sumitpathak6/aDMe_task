@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecomm_home/screens/product_details.dart';
 import 'package:ecomm_home/utils/category_list.dart';
 import 'package:ecomm_home/utils/products.dart';
 import 'package:ecomm_home/utils/promotion_list.dart';
+import 'package:ecomm_home/utils/strings.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +16,7 @@ class HomeScreen extends StatelessWidget {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('E Commerce App'),
+          title: const Text(e_commerece_app),
           centerTitle: true,
           automaticallyImplyLeading: false,
           actions: [
@@ -80,7 +82,7 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "Categories",
+                      categories,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
@@ -124,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "Products",
+                      products,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
@@ -146,84 +148,93 @@ class HomeScreen extends StatelessWidget {
                   itemCount: dummyProducts.length,
                   itemBuilder: (context, index) {
                     final product = dummyProducts[index];
-                    return Card(
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Image.asset(
-                              product.imageUrl,
-                              fit: BoxFit.cover,
-                              width: double.infinity,
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductDetail(product: product)));
+                      },
+                      child: Card(
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Image.asset(
+                                product.imageUrl,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      product.name,
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        product.name,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '\$${product.price.toStringAsFixed(2)}',
-                                      style: const TextStyle(
-                                        fontSize: 16.0,
-                                        color: Colors.red,
+                                      Text(
+                                        '\$${product.price.toStringAsFixed(2)}',
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          color: Colors.red,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 4.0),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Text(
-                                    product.category,
-                                    style: const TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.black,
-                                    ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(height: 6.0),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Center(
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Item added to cart'),
-                                            duration: Duration(seconds: 1),
-                                          ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        'Add to Cart',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.bold),
+                                  const SizedBox(height: 4.0),
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Text(
+                                      product.category,
+                                      style: const TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.black,
                                       ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
+                                  const SizedBox(height: 6.0),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(snackBar_message),
+                                              duration: Duration(seconds: 1),
+                                            ),
+                                          );
+                                        },
+                                        child: const Text(
+                                          add_to_cart,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },
